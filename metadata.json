@@ -1,8 +1,9 @@
 {
-  "name": "OXCITIZEN - Super Citizen Platform",
-  "description": "An AI-powered, voice-enabled, multi-modal super platform for every Indian citizen.",
   "requestFramePermissions": [
     "camera",
-    "microphone"
-  ]
+    "microphone",
+    "geolocation"
+  ],
+  "name": "",
+  "description": ""
 }
