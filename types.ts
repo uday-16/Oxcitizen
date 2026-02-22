@@ -1,13 +1,13 @@
 
 export enum ServiceCategory {
+  DOCUMENTS = 'Documents',
   HEALTH = 'Health',
-  EDUCATION = 'Education',
   JOBS = 'Jobs',
-  EMERGENCY = 'Emergency',
-  LEGAL = 'Legal',
   SCHEMES = 'Schemes',
-  FINANCE = 'Finance',
-  TOOLS = 'Tools'
+  LEGAL = 'Legal',
+  COMPLAINTS = 'Complaints',
+  PAYMENTS = 'Payments',
+  LOCAL = 'Local'
 }
 
 export interface Scheme {
@@ -51,4 +51,14 @@ export interface SearchResult {
   category: string;
   type: 'page' | 'scheme' | 'job' | 'hospital';
   link: string;
+}
+
+export type Language = 'EN' | 'HI' | 'TE';
+
+export interface Message {
+  id: string;
+  role: 'user' | 'model';
+  text: string;
+  timestamp: number;
+  grounding?: any[];
 }

@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Moon, Sun, Settings, LogOut, Volume2, Search, Globe, ChevronDown, Check, Sparkles } from 'lucide-react';
+import { Menu, X, Moon, Sun, Settings, LogOut, Volume2, Search, Globe, ChevronDown, Check, Sparkles, Fingerprint } from 'lucide-react';
 import { useLanguage, LANGUAGES, Language } from '../../context/LanguageContext';
 
 interface NavbarProps {
@@ -22,8 +22,8 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode, user, onLogout }
   const navLinks = [
     { name: t('services'), path: '/services' },
     { name: t('schemes'), path: '/schemes' },
-    { name: t('media_studio'), path: '/media-studio' },
-    { name: t('live'), path: '/live-assistant', icon: <Volume2 size={14} className="text-blue-500" /> },
+    { name: 'Talk', path: '/talk', icon: <Volume2 size={14} className="text-sky-500" /> },
+    { name: 'Synth ID', path: '/journalist-id', icon: <Fingerprint size={14} className="text-emerald-500" /> },
     { name: t('emergency'), path: '/emergency', urgent: true },
   ];
 

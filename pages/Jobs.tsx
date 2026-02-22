@@ -5,6 +5,7 @@ import {
   Briefcase, MapPin, DollarSign, Clock, Filter, ArrowRight, 
   Search, SlidersHorizontal, CheckCircle, Bookmark, Star, Zap
 } from 'lucide-react';
+import { motion } from 'motion/react';
 
 const Jobs: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -29,13 +30,78 @@ const Jobs: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-12 animate-fade-up">
+      {/* 🧩 VISUAL STORYTELLING: JOBS HERO */}
+      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-slate-950 px-4 py-20 rounded-[4rem] mb-20 mx-4 mt-4">
+        <div className="absolute inset-0 z-0 opacity-30">
+          <img 
+            src="https://picsum.photos/seed/jobs-hero-rich/1920/1080" 
+            className="w-full h-full object-cover"
+            alt="Jobs Hero"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-blue-900/40 to-transparent"></div>
+        </div>
+        <div className="container mx-auto relative z-10">
+          <div className="max-w-3xl space-y-8">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-xl px-6 py-2 rounded-full border border-white/10 text-[10px] font-black text-blue-400 uppercase tracking-widest"
+            >
+              <Zap size={14} fill="currentColor" /> Live Recruitment Feed
+            </motion.div>
+            <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85] text-white">Job <br/> <span className="text-blue-400">Matrix.</span></h1>
+            <p className="text-xl md:text-2xl text-blue-100/60 font-medium leading-relaxed">
+              Smart indexing for verified employment opportunities across the nation. Let CitizenAI match your skills with the right career path.
+            </p>
+            <div className="flex flex-wrap gap-6">
+              <button className="bg-white text-slate-900 px-10 py-5 rounded-2xl font-black uppercase text-xs tracking-widest shadow-2xl hover:scale-105 transition-all">Explore Jobs</button>
+              <button className="bg-blue-600 text-white px-10 py-5 rounded-2xl font-black uppercase text-xs tracking-widest shadow-2xl hover:scale-105 transition-all">Upload Resume</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 🧩 VISUAL STORYTELLING: CAREER GROWTH */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="grid lg:grid-cols-2 gap-20 items-center mb-32">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="relative order-2 lg:order-1"
+            >
+              <div className="absolute -inset-10 bg-blue-600/20 rounded-full blur-3xl animate-pulse"></div>
+              <img 
+                src="https://picsum.photos/seed/career-growth/1200/1000" 
+                className="rounded-[4rem] shadow-2xl relative z-10 border border-slate-100 dark:border-slate-800"
+                alt="Career Growth"
+              />
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-8 order-1 lg:order-2"
+            >
+              <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">Skill <br/> <span className="text-blue-600">Evolution.</span></h2>
+              <p className="text-lg text-slate-500 font-medium leading-relaxed">
+                Connect with the future of work. Our platform provides verified job listings, skill development resources, and AI-powered career guidance to help you thrive in the modern economy.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <div className="px-6 py-3 bg-blue-50 dark:bg-blue-900/30 rounded-2xl text-blue-600 font-black text-[10px] uppercase tracking-widest">Tech & AI</div>
+                <div className="px-6 py-3 bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl text-emerald-600 font-black text-[10px] uppercase tracking-widest">Sustainability</div>
+                <div className="px-6 py-3 bg-amber-50 dark:bg-amber-900/30 rounded-2xl text-amber-600 font-black text-[10px] uppercase tracking-widest">Public Service</div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
         <div className="max-w-xl">
-          <div className="inline-flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 px-4 py-1.5 rounded-full text-[10px] font-black text-blue-600 uppercase tracking-widest mb-4">
-            <Zap size={14} fill="currentColor" /> Live Recruitment Feed
-          </div>
-          <h1 className="text-6xl font-black mb-4 tracking-tighter uppercase leading-[0.9]">Job Matrix <span className="text-blue-600">PRO</span></h1>
-          <p className="text-xl text-slate-500 font-medium">Smart indexing for verified employment opportunities.</p>
+          <h2 className="text-4xl font-black mb-4 tracking-tighter uppercase">Available Positions</h2>
+          <p className="text-lg text-slate-500 font-medium">Find your next career move with AI-powered matching.</p>
         </div>
         <div className="w-full md:w-auto flex flex-col sm:flex-row gap-4">
            <div className="relative flex-grow min-w-[300px]">

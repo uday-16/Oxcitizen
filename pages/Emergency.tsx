@@ -16,11 +16,12 @@ const Emergency: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-12 page-enter">
-      <div className="bg-red-700 rounded-[3rem] p-12 md:p-24 text-white mb-16 text-center shadow-2xl relative overflow-hidden">
+      <div className="bg-red-700 rounded-[3rem] p-12 md:p-24 text-white mb-16 text-center shadow-2xl relative overflow-hidden group">
         <img 
-          src="https://images.unsplash.com/photo-1587745416684-47953f16f02f?auto=format&fit=crop&q=90&w=1600" 
-          className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-30" 
+          src="https://picsum.photos/seed/emergency/1600/900" 
+          className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-30 transition-transform duration-1000 group-hover:scale-105" 
           alt="Emergency Services" 
+          referrerPolicy="no-referrer"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-red-900/40 to-red-800/80"></div>
         <div className="relative z-10 max-w-3xl mx-auto">

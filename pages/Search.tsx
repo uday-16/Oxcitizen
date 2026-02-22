@@ -40,10 +40,20 @@ const GlobalSearch: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-12 animate-fade-up max-w-4xl min-h-[80vh]">
-      <div className="text-center mb-16 space-y-6">
-        <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter">Global <span className="text-blue-600">Oracle</span></h1>
-        <p className="text-slate-500 font-medium">Real-time civic intelligence powered by Google Search Grounding.</p>
+    <div className="container mx-auto px-4 py-12 animate-fade-up max-w-5xl min-h-[80vh]">
+      <div className="relative h-[35vh] rounded-[3rem] overflow-hidden mb-16 shadow-2xl group">
+        <img 
+          src="https://picsum.photos/seed/oracle/1600/900" 
+          alt="Oracle Hero"
+          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-900/60 to-slate-950/90 flex items-center justify-center text-center">
+          <div className="px-12 max-w-3xl text-white">
+            <h1 className="text-6xl md:text-8xl font-black mb-6 uppercase tracking-tighter">Global <span className="text-blue-400">Oracle</span></h1>
+            <p className="text-xl md:text-2xl opacity-90 leading-relaxed font-medium">Real-time civic intelligence powered by Google Search Grounding.</p>
+          </div>
+        </div>
       </div>
 
       <div className="relative group mb-16">

@@ -5,9 +5,19 @@ import { Calculator, Landmark, ShieldCheck, UserCheck } from 'lucide-react';
 const Tools: React.FC = () => {
   return (
     <div className="container mx-auto px-4 py-12 page-enter">
-      <div className="text-center mb-16">
-        <h1 className="text-5xl font-bold mb-6">Citizen Tools</h1>
-        <p className="text-xl text-gray-500">Handy calculators and verification utilities for daily needs.</p>
+      <div className="relative h-[40vh] rounded-[3rem] overflow-hidden mb-16 shadow-2xl group">
+        <img 
+          src="https://picsum.photos/seed/tools/1600/900" 
+          alt="Tools Hero"
+          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 to-transparent flex items-center">
+          <div className="px-12 max-w-2xl text-white">
+            <h1 className="text-6xl md:text-8xl font-black mb-6 uppercase tracking-tighter">Citizen Tools</h1>
+            <p className="text-xl md:text-2xl opacity-90 leading-relaxed font-medium">Handy calculators and verification utilities for daily needs.</p>
+          </div>
+        </div>
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">

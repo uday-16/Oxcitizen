@@ -4,15 +4,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import { 
   ArrowRight, Heart, Search, Zap, Sparkles, TrendingUp, 
   Volume2, Plus, Brain, Newspaper, ShieldCheck,
-  Layers, Globe, Fingerprint, Camera, Play
+  Layers, Globe, Fingerprint, Camera, Play, MapPin,
+  AlertCircle, Phone, Shield, User, Bookmark,
+  Bell, HelpCircle, Languages, Type, Mic
 } from 'lucide-react';
-import { SERVICE_CATEGORIES, HERO_IMAGES } from '../constants';
+import { motion, AnimatePresence } from 'motion/react';
+import { SERVICE_CATEGORIES, HERO_IMAGES, PROBLEM_CARDS } from '../constants';
 import Stories from '../components/widgets/Stories';
 import { useLanguage } from '../context/LanguageContext';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
-  const { t, lang } = useLanguage();
+  const { t, lang, setLang } = useLanguage();
+  const [showAccessibility, setShowAccessibility] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,163 +34,390 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="animate-fade-up">
-      <section className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 sticky top-20 z-40">
+    <div className="bg-slate-50 dark:bg-slate-950 min-h-screen pb-32">
+      {/* 🚨 EMERGENCY ACCESS STRIP - ALWAYS VISIBLE */}
+      <div className="bg-red-600 text-white py-3 px-4 sticky top-0 z-50 shadow-lg">
+        <div className="container mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-4 overflow-x-auto no-scrollbar">
+            <EmergencyButton icon={<Phone size={14} />} label="Ambulance" color="bg-white/20" />
+            <EmergencyButton icon={<Shield size={14} />} label="Police" color="bg-white/20" />
+            <EmergencyButton icon={<AlertCircle size={14} />} label="Disaster" color="bg-white/20" />
+          </div>
+          <button className="bg-white text-red-600 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest animate-pulse">
+            SOS Emergency
+          </button>
+        </div>
+      </div>
+
+      {/* STORIES */}
+      <section className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800">
         <div className="container mx-auto">
           <Stories />
         </div>
       </section>
 
-      {/* 🚀 ULTIMATE REFINED HERO SECTION - 75VH FOCUS & 15-IMAGE DENSE GRID */}
-      <section className="relative min-h-[75vh] flex items-center justify-center overflow-hidden bg-slate-950 px-4 py-12">
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          {/* Enhanced Overlay Layer */}
-          <div className="absolute inset-0 bg-gradient-to-b from-blue-900/30 via-slate-950/80 to-slate-950 z-10"></div>
-          
-          {/* Dense 15-Image Ultra Grid */}
-          <div className="grid grid-cols-3 md:grid-cols-5 gap-3 opacity-30 transform -rotate-3 scale-110 pointer-events-none">
-            {HERO_IMAGES.map((url, i) => (
-              <div 
-                key={i} 
-                className="aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl border border-white/5 group relative"
-                style={{ animationDelay: `${i * 100}ms` }}
+      {/* 🚀 IMMERSIVE HERO ACTION HUB */}
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-slate-950 px-4 py-20">
+        {/* Cinematic Background Grid */}
+        <div className="absolute inset-0 z-0 opacity-20">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 transform -rotate-12 scale-150">
+            {HERO_IMAGES.slice(0, 8).map((url, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: i * 0.1 }}
+                className="aspect-video rounded-[2rem] overflow-hidden"
               >
-                <img 
-                  src={`${url}&auto=format&fit=crop&q=90&w=1200`} 
-                  className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-125 brightness-75 group-hover:brightness-100" 
-                  alt={`Civic Excellence ${i}`} 
-                />
-                <div className="absolute inset-0 bg-blue-900/10 mix-blend-overlay"></div>
-              </div>
+                <img src={url} className="w-full h-full object-cover" alt="Civic" />
+              </motion.div>
             ))}
           </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-transparent to-slate-950"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-transparent to-slate-950"></div>
         </div>
 
-        <div className="relative z-20 container mx-auto text-center">
-          <div className="max-w-6xl mx-auto space-y-8">
-            <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-3xl px-8 py-4 rounded-full border border-white/10 text-[10px] font-black uppercase tracking-[0.4em] text-blue-300 animate-float shadow-2xl">
-              <Sparkles size={16} className="text-amber-400" /> {t('hero_title')}
-            </div>
+        <div className="container mx-auto relative z-10">
+          <div className="max-w-5xl mx-auto text-center space-y-12">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-2xl px-8 py-4 rounded-full border border-white/10 text-[10px] font-black text-sky-400 uppercase tracking-[0.4em] shadow-2xl"
+            >
+              <Sparkles size={16} fill="currentColor" className="text-amber-400" /> Citizen Intelligence OS
+            </motion.div>
             
-            <h1 className="text-5xl md:text-[8.5rem] font-black text-white leading-[0.8] tracking-tighter uppercase drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-               CITIZEN <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-emerald-400">EVOLVED.</span>
-            </h1>
-            
-            <p className="text-lg md:text-3xl text-blue-100/60 max-w-3xl mx-auto font-medium leading-relaxed tracking-tight drop-shadow-md">
-              {t('hero_subtitle')}
-            </p>
+            <motion.h1 
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, type: 'spring', stiffness: 50 }}
+              className="text-6xl md:text-[9rem] font-black uppercase tracking-tighter leading-[0.8] text-white"
+            >
+              Citizen <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-400">Empowered.</span>
+            </motion.h1>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-10">
-              <button 
-                onClick={() => navigate('/search')}
-                className="w-full sm:w-auto bg-blue-600 text-white px-16 py-8 rounded-[2.5rem] font-black text-xl shadow-[0_0_60px_rgba(37,99,235,0.4)] flex items-center justify-center gap-4 hover:scale-105 active:scale-95 transition-all group"
-              >
-                <Search className="group-hover:rotate-12 transition-transform" /> {t('start_search')}
-              </button>
-              <Link to="/live-assistant" className="w-full sm:w-auto bg-white/5 backdrop-blur-3xl border border-white/10 text-white px-16 py-8 rounded-[2.5rem] font-black text-xl flex items-center justify-center gap-4 hover:bg-white/10 transition-all">
-                <Volume2 className="animate-pulse" /> {t('live_voice')}
-              </Link>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="text-xl md:text-3xl text-slate-400 max-w-3xl mx-auto font-medium leading-tight"
+            >
+              Access essential services, verified identity, and real-time support in one unified platform.
+            </motion.p>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="relative max-w-3xl mx-auto group"
+            >
+              <div className="absolute -inset-1 bg-gradient-to-r from-sky-600 to-indigo-600 rounded-[3rem] blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+              <div className="relative flex items-center">
+                <Search className="absolute left-8 text-slate-400" size={28} />
+                <input 
+                  type="text" 
+                  placeholder="What do you need help with today?"
+                  className="w-full pl-20 pr-40 py-10 rounded-[3rem] bg-slate-900/80 backdrop-blur-3xl text-white border border-white/10 outline-none focus:ring-4 focus:ring-sky-500/20 font-bold text-2xl placeholder:text-slate-600"
+                />
+                <button className="absolute right-4 bg-sky-600 text-white px-10 py-6 rounded-[2rem] font-black text-sm uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-sky-600/40">
+                  Search
+                </button>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+              className="flex flex-wrap justify-center gap-6"
+            >
+              <QuickAction icon={<Mic size={20} />} label="Voice Assistant" onClick={() => navigate('/talk')} />
+              <QuickAction icon={<Camera size={20} />} label="Scan Documents" />
+              <QuickAction icon={<MapPin size={20} />} label="Service Centers" />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* 🧩 VISUAL STORYTELLING: IDENTITY SECTION */}
+      <section className="py-32 px-4 bg-white dark:bg-slate-900 overflow-hidden">
+        <div className="container mx-auto">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-10"
+            >
+              <div className="inline-flex items-center gap-3 bg-blue-600/10 text-blue-600 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest">
+                <ShieldCheck size={16} /> Secure Identity
+              </div>
+              <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">Your Digital <br/> <span className="text-blue-600">Synth ID.</span></h2>
+              <p className="text-xl text-slate-500 font-medium leading-relaxed">
+                Mint your immutable digital identity on the OX-Chain. Verified by Gemini Vision, recognized globally for professional and independent journalists.
+              </p>
+              <div className="flex gap-6">
+                <Link to="/journalist-id" className="bg-slate-950 text-white px-12 py-6 rounded-3xl font-black text-sm uppercase tracking-widest hover:scale-105 transition-all shadow-2xl">
+                  Get Verified
+                </Link>
+                <Link to="/news" className="bg-slate-100 text-slate-600 px-12 py-6 rounded-3xl font-black text-sm uppercase tracking-widest hover:bg-slate-200 transition-all">
+                  View Bulletin
+                </Link>
+              </div>
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, rotate: 5 }}
+              whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+              viewport={{ once: true }}
+              className="relative"
+            >
+              <div className="absolute -inset-10 bg-blue-600/20 rounded-full blur-3xl animate-pulse"></div>
+              <img 
+                src="https://picsum.photos/seed/identity/1200/1000" 
+                className="rounded-[4rem] shadow-2xl relative z-10 border border-slate-100 dark:border-slate-800"
+                alt="Identity"
+              />
+              <div className="absolute -bottom-10 -left-10 bg-white dark:bg-slate-800 p-10 rounded-[3rem] shadow-2xl z-20 border border-slate-100 dark:border-slate-800 hidden md:block">
+                <div className="flex items-center gap-6">
+                  <div className="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600">
+                    <ShieldCheck size={32} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-widest opacity-40">Status</p>
+                    <p className="text-xl font-black uppercase tracking-tighter">Verified</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* 🧩 VISUAL STORYTELLING: HEALTH SECTION */}
+      <section className="py-32 px-4 bg-slate-50 dark:bg-slate-950 overflow-hidden">
+        <div className="container mx-auto">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="relative order-2 lg:order-1"
+            >
+              <div className="absolute -inset-10 bg-emerald-600/20 rounded-full blur-3xl animate-pulse"></div>
+              <img 
+                src="https://picsum.photos/seed/healthcare-civic/1200/1000" 
+                className="rounded-[4rem] shadow-2xl relative z-10 border border-slate-100 dark:border-slate-800"
+                alt="Healthcare"
+              />
+              <div className="absolute -top-10 -right-10 bg-white dark:bg-slate-800 p-10 rounded-[3rem] shadow-2xl z-20 border border-slate-100 dark:border-slate-800 hidden md:block">
+                <div className="flex items-center gap-6">
+                  <div className="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center text-red-600">
+                    <Heart size={32} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-widest opacity-40">Health Hub</p>
+                    <p className="text-xl font-black uppercase tracking-tighter">24/7 Support</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-10 order-1 lg:order-2"
+            >
+              <div className="inline-flex items-center gap-3 bg-emerald-600/10 text-emerald-600 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest">
+                <Heart size={16} /> Universal Health
+              </div>
+              <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">Wellness for <br/> <span className="text-emerald-600">Everyone.</span></h2>
+              <p className="text-xl text-slate-500 font-medium leading-relaxed">
+                Access top-rated hospitals, check eligibility for health schemes, and get immediate medical assistance. Your health is our priority.
+              </p>
+              <div className="flex gap-6">
+                <Link to="/health" className="bg-emerald-600 text-white px-12 py-6 rounded-3xl font-black text-sm uppercase tracking-widest hover:scale-105 transition-all shadow-2xl">
+                  Find Hospital
+                </Link>
+                <Link to="/services" className="bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-12 py-6 rounded-3xl font-black text-sm uppercase tracking-widest hover:bg-slate-100 transition-all border border-slate-100 dark:border-slate-800">
+                  Health Schemes
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* 🧩 VISUAL STORYTELLING: JOBS SECTION */}
+      <section className="py-32 px-4 bg-white dark:bg-slate-900 overflow-hidden">
+        <div className="container mx-auto">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-10"
+            >
+              <div className="inline-flex items-center gap-3 bg-indigo-600/10 text-indigo-600 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest">
+                <Zap size={16} /> Career Growth
+              </div>
+              <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">Future of <br/> <span className="text-indigo-600">Work.</span></h2>
+              <p className="text-xl text-slate-500 font-medium leading-relaxed">
+                Smart indexing for verified employment opportunities. Let CitizenAI match your skills with the right career path.
+              </p>
+              <div className="flex gap-6">
+                <Link to="/jobs" className="bg-indigo-600 text-white px-12 py-6 rounded-3xl font-black text-sm uppercase tracking-widest hover:scale-105 transition-all shadow-2xl">
+                  Explore Jobs
+                </Link>
+                <Link to="/talk" className="bg-slate-100 text-slate-600 px-12 py-6 rounded-3xl font-black text-sm uppercase tracking-widest hover:bg-slate-200 transition-all">
+                  Career Advice
+                </Link>
+              </div>
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="relative"
+            >
+              <div className="absolute -inset-10 bg-indigo-600/20 rounded-full blur-3xl animate-pulse"></div>
+              <img 
+                src="https://picsum.photos/seed/jobs-future/1200/1000" 
+                className="rounded-[4rem] shadow-2xl relative z-10 border border-slate-100 dark:border-slate-800"
+                alt="Jobs"
+              />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-white/10 backdrop-blur-3xl rounded-full flex items-center justify-center border border-white/20 z-20">
+                <Play className="text-white fill-current" size={48} />
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* 📊 PERSONALIZED SNAPSHOT & BULLETIN */}
+      <section className="py-12 px-4">
+        <div className="container mx-auto">
+          <div className="grid lg:grid-cols-12 gap-10">
+            {/* Snapshot */}
+            <div className="lg:col-span-5 space-y-8">
+              <div className="bg-white dark:bg-slate-900 rounded-[3rem] p-10 shadow-xl border border-slate-100 dark:border-slate-800">
+                <div className="flex items-center justify-between mb-8">
+                  <h3 className="text-2xl font-black uppercase tracking-tighter flex items-center gap-3">
+                    <User className="text-sky-600" /> My Dashboard
+                  </h3>
+                  <button className="w-10 h-10 bg-slate-50 dark:bg-slate-800 rounded-full flex items-center justify-center">
+                    <Bell size={18} className="text-slate-400" />
+                  </button>
+                </div>
+                <div className="space-y-4">
+                  <DashboardItem icon={<Bookmark />} title="Saved Schemes" count="3" color="text-orange-600" />
+                  <DashboardItem icon={<Zap />} title="Active Applications" count="1" color="text-emerald-600" />
+                  <DashboardItem icon={<TrendingUp />} title="Job Matches" count="12" color="text-blue-600" />
+                </div>
+                <button className="w-full mt-8 py-5 bg-slate-950 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-slate-800 transition-all">
+                  Open Full Dashboard
+                </button>
+              </div>
             </div>
-            
-            <div className="pt-12 flex flex-wrap justify-center gap-12 opacity-50">
-               <div className="flex items-center gap-3 text-white font-black uppercase tracking-widest text-[9px]">
-                  <Fingerprint className="text-blue-500" size={16} /> 256-Bit Secure
-               </div>
-               <div className="flex items-center gap-3 text-white font-black uppercase tracking-widest text-[9px]">
-                  <Globe className="text-emerald-500" size={16} /> Native Grounding
-               </div>
-               <div className="flex items-center gap-3 text-white font-black uppercase tracking-widest text-[9px]">
-                  <Layers className="text-amber-500" size={16} /> Multi-Channel
-               </div>
+
+            {/* Bulletin */}
+            <div className="lg:col-span-7">
+              <div className="bg-white dark:bg-slate-900 rounded-[3rem] p-10 shadow-xl border border-slate-100 dark:border-slate-800 h-full">
+                <div className="flex items-center justify-between mb-10">
+                  <h3 className="text-2xl font-black uppercase tracking-tighter flex items-center gap-3">
+                    <Newspaper className="text-emerald-600" /> National Bulletin
+                  </h3>
+                  <Link to="/news" className="text-[10px] font-black uppercase tracking-widest text-emerald-600">Live Feed</Link>
+                </div>
+                <div className="space-y-8">
+                  <BulletinItem 
+                    tag="SCHEME" 
+                    title="Ayushman Bharat expansion announced for senior citizens." 
+                    time="10m ago" 
+                  />
+                  <BulletinItem 
+                    tag="ALERT" 
+                    title="New digital identity protocol starting next month." 
+                    time="2h ago" 
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 🧩 BENTO GRID SERVICES */}
-      <section className="py-24 bg-slate-50 dark:bg-slate-950 px-4">
+      {/* 💡 GUIDED PROBLEM CARDS */}
+      <section className="py-12 px-4">
         <div className="container mx-auto">
-          <div className="grid lg:grid-cols-12 gap-10">
-            <div className="lg:col-span-8 space-y-10">
-              <div className="flex items-center justify-between reveal">
-                <h2 className="text-4xl font-black uppercase tracking-tighter flex items-center gap-4">
-                  <Brain className="text-blue-600" /> {t('ai_lab')}
-                </h2>
-                <Link to="/media-studio" className="text-xs font-black uppercase text-blue-600 border-b-2 border-blue-600 pb-1 tracking-widest">{t('enter_studio')}</Link>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-10">
-                <StudioCard 
-                  title="Vision Forge" 
-                  desc="High-fidelity civic visuals powered by Gemini 3 Pro."
-                  icon={<Camera size={32} />}
-                  color="from-blue-600 to-indigo-700"
-                  link="/media-studio"
-                  label={t('enter_studio')}
-                />
-                <StudioCard 
-                  title="Motion Engine" 
-                  desc="Cinematic civic films with Veo 3.1 fast generation."
-                  icon={<Play size={32} />}
-                  color="from-emerald-600 to-teal-700"
-                  link="/media-studio"
-                  label={t('enter_studio')}
-                />
-              </div>
-
-              <div className="bg-white dark:bg-slate-900 rounded-[4rem] p-12 shadow-2xl border border-slate-100 dark:border-slate-800 reveal relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-500/5 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-1000"></div>
-                <div className="flex items-center justify-between mb-12">
-                  <h3 className="text-3xl font-black uppercase tracking-tighter flex items-center gap-4">
-                    <Newspaper className="text-emerald-600" /> {t('national_bulletin')}
-                  </h3>
+          <h2 className="text-3xl font-black uppercase tracking-tighter mb-10">Common Solutions</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {PROBLEM_CARDS.map((card) => (
+              <div key={card.id} className="bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-lg hover:shadow-2xl transition-all group cursor-pointer">
+                <div className="w-16 h-16 bg-sky-50 dark:bg-sky-900/30 text-sky-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  {card.icon}
                 </div>
-                <div className="space-y-12">
-                   <NewsItem 
-                     tag="GOVERNMENT" 
-                     title="National Green Hydrogen Mission hits new milestone in clean energy transition." 
-                     time="Just Now"
-                   />
-                   <NewsItem 
-                     tag="HEALTH" 
-                     title="Expanded Digital Health Mission achieves 500M user registrations." 
-                     time="1h ago"
-                   />
+                <h4 className="text-xl font-black uppercase tracking-tighter mb-2">{card.title}</h4>
+                <p className="text-slate-500 dark:text-slate-400 font-medium text-sm mb-6">{card.desc}</p>
+                <div className="flex items-center gap-2 text-sky-600 font-black text-[10px] uppercase tracking-widest">
+                  Start Guide <ArrowRight size={14} />
                 </div>
               </div>
-            </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-            <div className="lg:col-span-4 space-y-10">
-              <div className="bg-gradient-to-br from-indigo-900 via-blue-900 to-blue-800 rounded-[4.5rem] p-12 text-white shadow-2xl reveal relative overflow-hidden group border border-white/5">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl opacity-20"></div>
-                <h3 className="text-4xl font-black mb-6 uppercase tracking-tighter leading-none">{t('smart_matcher')}</h3>
-                <p className="text-blue-100/70 mb-10 leading-relaxed font-medium text-lg">AI-powered eligibility engine finds schemes hidden in plain sight.</p>
-                <Link to="/smart-matcher" className="inline-flex items-center gap-4 bg-white text-indigo-950 px-12 py-6 rounded-3xl font-black text-sm uppercase tracking-widest hover:scale-105 transition-all shadow-2xl">
-                  {t('analyze_profile')} <ArrowRight size={20} />
-                </Link>
-              </div>
+      {/* 🎙 VOICE ASSISTANT DOCK - FLOATING */}
+      <div className="fixed bottom-10 right-10 z-50">
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => navigate('/talk')}
+          className="w-20 h-20 bg-sky-600 text-white rounded-full shadow-2xl flex items-center justify-center relative group"
+        >
+          <div className="absolute inset-0 bg-sky-600 rounded-full animate-ping opacity-20"></div>
+          <Volume2 size={32} />
+          <div className="absolute bottom-full right-0 mb-4 bg-white dark:bg-slate-900 text-slate-900 dark:text-white px-6 py-3 rounded-2xl shadow-2xl border border-slate-100 dark:border-slate-800 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+            <p className="font-black uppercase tracking-widest text-[10px]">How can I help you?</p>
+          </div>
+        </motion.button>
+      </div>
 
-              <div className="bg-white dark:bg-slate-900 rounded-[4rem] p-12 shadow-xl border border-slate-100 dark:border-slate-800 reveal">
-                <h3 className="text-2xl font-black mb-10 uppercase tracking-tighter">{t('quick_matrix')}</h3>
-                <div className="grid grid-cols-2 gap-6">
-                  {SERVICE_CATEGORIES.slice(0, 4).map((cat, i) => (
-                    <Link 
-                      key={i} 
-                      to={cat.name === 'Emergency' ? '/emergency' : '/services'} 
-                      className={`p-10 rounded-[3.5rem] ${cat.color} ${cat.textColor} hover:scale-105 transition-all flex flex-col items-center justify-center text-center gap-4 shadow-sm group border border-transparent hover:border-current/20 overflow-hidden relative`}
-                    >
-                      <div className="absolute inset-0 opacity-10 group-hover:scale-110 transition-transform duration-500 z-0">
-                         <img src={cat.image} className="w-full h-full object-cover" alt={cat.name} />
-                      </div>
-                      <div className="relative z-10 flex flex-col items-center">
-                        <div className="text-5xl group-hover:scale-125 transition-transform duration-500 mb-3">{cat.icon}</div>
-                        <span className="text-[10px] font-black uppercase tracking-widest leading-none">{cat.name}</span>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
+      {/* ♿ ACCESSIBILITY PANEL - FLOATING */}
+      <div className="fixed bottom-10 left-10 z-50">
+        <button 
+          onClick={() => setShowAccessibility(!showAccessibility)}
+          className="w-14 h-14 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 rounded-full shadow-2xl flex items-center justify-center border border-slate-100 dark:border-slate-800"
+        >
+          <HelpCircle size={24} />
+        </button>
+        
+        <AnimatePresence>
+          {showAccessibility && (
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.9 }}
+              className="absolute bottom-20 left-0 w-64 bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl border border-slate-100 dark:border-slate-800 p-6 space-y-6"
+            >
+              <h4 className="font-black uppercase tracking-widest text-[10px] text-slate-400">Accessibility</h4>
+              <div className="space-y-3">
+                <AccessibilityItem icon={<Languages size={18} />} label="Change Language" onClick={() => navigate('/settings')} />
+                <AccessibilityItem icon={<Type size={18} />} label="Large Text Mode" />
+                <AccessibilityItem icon={<Volume2 size={18} />} label="Voice Readout" />
               </div>
-            </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* TRUST INDICATORS */}
+      <section className="py-12 border-t border-slate-100 dark:border-slate-800">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-wrap justify-center gap-12 opacity-40">
+            <TrustBadge icon={<ShieldCheck size={16} />} label="Verified Information" />
+            <TrustBadge icon={<Globe size={16} />} label="Official Portals Sync" />
+            <TrustBadge icon={<Fingerprint size={16} />} label="Secure OX-Chain ID" />
           </div>
         </div>
       </section>
@@ -194,32 +425,57 @@ const Home: React.FC = () => {
   );
 };
 
-const StudioCard = ({ title, desc, icon, color, link, label }: any) => (
-  <Link to={link} className={`block p-12 rounded-[4.5rem] bg-gradient-to-br ${color} text-white shadow-2xl hover:scale-[1.02] transition-all relative overflow-hidden group`}>
-    <div className="absolute -right-4 -top-4 p-12 opacity-10 group-hover:scale-150 group-hover:rotate-12 transition-all duration-1000">
-      {icon}
-    </div>
-    <div className="relative z-10 space-y-6">
-      <h3 className="text-4xl font-black uppercase tracking-tighter leading-none">{title}</h3>
-      <p className="text-white/80 text-xl font-medium leading-tight">{desc}</p>
-      <div className="pt-4 flex items-center gap-3 font-black text-[10px] uppercase tracking-[0.3em]">
-        {label} <ArrowRight size={16} />
-      </div>
-    </div>
-  </Link>
+const EmergencyButton = ({ icon, label, color }: any) => (
+  <button className={`${color} px-4 py-2 rounded-full flex items-center gap-2 font-black text-[10px] uppercase tracking-widest whitespace-nowrap hover:bg-white/30 transition-all`}>
+    {icon} {label}
+  </button>
 );
 
-const NewsItem = ({ tag, title, time }: { tag: string, title: string, time: string }) => (
-  <div className="group cursor-pointer flex gap-10 items-center hover:bg-slate-50 dark:hover:bg-white/5 p-8 rounded-[3.5rem] transition-all border border-transparent hover:border-slate-100 dark:hover:border-slate-800">
-    <div className="w-2 h-16 bg-blue-600 rounded-full group-hover:h-20 transition-all"></div>
-    <div className="space-y-3 flex-grow">
-      <div className="flex items-center gap-5">
-        <span className="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] bg-blue-50 dark:bg-blue-900/30 px-4 py-2 rounded-full">{tag}</span>
-        <span className="text-[10px] text-slate-400 font-bold uppercase">{time}</span>
-      </div>
-      <h4 className="text-3xl font-black group-hover:text-blue-600 transition-colors leading-tight tracking-tight uppercase">{title}</h4>
+const QuickAction = ({ icon, label, onClick }: any) => (
+  <button 
+    onClick={onClick}
+    className="bg-white dark:bg-slate-900 px-6 py-3 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex items-center gap-3 font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all"
+  >
+    {icon} {label}
+  </button>
+);
+
+const DashboardItem = ({ icon, title, count, color }: any) => (
+  <div className="flex items-center justify-between p-5 bg-slate-50 dark:bg-slate-950 rounded-2xl group cursor-pointer hover:bg-slate-100 transition-all">
+    <div className="flex items-center gap-4">
+      <div className={`${color} opacity-60 group-hover:scale-110 transition-transform`}>{icon}</div>
+      <span className="font-bold text-sm text-slate-600 dark:text-slate-400">{title}</span>
     </div>
-    <ArrowRight className="text-slate-200 group-hover:text-blue-600 group-hover:translate-x-3 transition-all" size={40} />
+    <span className="font-black text-lg">{count}</span>
+  </div>
+);
+
+const BulletinItem = ({ tag, title, time }: any) => (
+  <div className="flex gap-6 group cursor-pointer">
+    <div className="w-1 h-12 bg-emerald-600 rounded-full group-hover:h-16 transition-all"></div>
+    <div className="space-y-2">
+      <div className="flex items-center gap-3">
+        <span className="text-[8px] font-black uppercase tracking-widest bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 px-3 py-1 rounded-full">{tag}</span>
+        <span className="text-[8px] font-bold text-slate-400 uppercase">{time}</span>
+      </div>
+      <h4 className="font-black uppercase tracking-tighter text-lg leading-tight group-hover:text-emerald-600 transition-colors">{title}</h4>
+    </div>
+  </div>
+);
+
+const AccessibilityItem = ({ icon, label, onClick }: any) => (
+  <button 
+    onClick={onClick}
+    className="w-full flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all text-left"
+  >
+    <div className="text-slate-400">{icon}</div>
+    <span className="font-bold text-xs text-slate-600 dark:text-slate-400">{label}</span>
+  </button>
+);
+
+const TrustBadge = ({ icon, label }: any) => (
+  <div className="flex items-center gap-3 font-black text-[9px] uppercase tracking-[0.2em]">
+    {icon} {label}
   </div>
 );
 

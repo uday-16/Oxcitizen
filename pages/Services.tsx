@@ -51,9 +51,19 @@ const Services: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-12 page-enter">
-      <div className="text-center mb-16">
-        <h1 className="text-5xl font-bold mb-6">Our Services</h1>
-        <p className="text-xl text-gray-500 max-w-2xl mx-auto">Explore our wide range of citizen-centric services designed to make your life easier.</p>
+      <div className="relative h-[40vh] rounded-[3rem] overflow-hidden mb-16 shadow-2xl group">
+        <img 
+          src="https://picsum.photos/seed/services/1600/900" 
+          alt="Services Hero"
+          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-transparent flex items-center">
+          <div className="px-12 max-w-2xl text-white">
+            <h1 className="text-5xl md:text-7xl font-black mb-6 uppercase tracking-tighter">Citizen Services</h1>
+            <p className="text-xl opacity-90 leading-relaxed font-medium">Explore our wide range of citizen-centric services designed to make your life easier.</p>
+          </div>
+        </div>
       </div>
 
       {/* Filter Bar */}

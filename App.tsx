@@ -4,7 +4,6 @@ import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import BottomNav from './components/layout/BottomNav';
-import Chatbot from './components/widgets/Chatbot';
 import ToastContainer from './components/common/ToastContainer';
 import { LanguageProvider } from './context/LanguageContext';
 
@@ -18,13 +17,10 @@ const EmergencyPage = lazy(() => import('./pages/Emergency'));
 const ToolsPage = lazy(() => import('./pages/Tools'));
 const LoginPage = lazy(() => import('./pages/Auth/Login'));
 const RegisterPage = lazy(() => import('./pages/Auth/Register'));
-const SmartMatcherPage = lazy(() => import('./pages/SmartMatcher'));
-const ScannerPage = lazy(() => import('./pages/Scanner'));
-const ConsultationPage = lazy(() => import('./pages/Consultation'));
-const MediaStudioPage = lazy(() => import('./pages/MediaStudio'));
 const NewsPage = lazy(() => import('./pages/News'));
 const GlobalSearchPage = lazy(() => import('./pages/Search'));
-const LiveAssistant = lazy(() => import('./pages/LiveAssistant'));
+const TalkPage = lazy(() => import('./pages/Talk'));
+const JournalistSynthID = lazy(() => import('./pages/JournalistSynthID'));
 
 // Admin Modules
 const AdminDashboard = lazy(() => import('./pages/Admin/Dashboard'));
@@ -68,13 +64,10 @@ const AppContent: React.FC = () => {
               <Route path="/tools" element={<ToolsPage />} />
               <Route path="/login" element={<LoginPage onLogin={setUser} />} />
               <Route path="/register" element={<RegisterPage onLogin={setUser} />} />
-              <Route path="/smart-matcher" element={<SmartMatcherPage />} />
-              <Route path="/scanner" element={<ScannerPage />} />
-              <Route path="/consultation" element={<ConsultationPage />} />
-              <Route path="/media-studio" element={<MediaStudioPage />} />
               <Route path="/news" element={<NewsPage />} />
               <Route path="/search" element={<GlobalSearchPage />} />
-              <Route path="/live-assistant" element={<LiveAssistant />} />
+              <Route path="/talk" element={<TalkPage />} />
+              <Route path="/journalist-id" element={<JournalistSynthID />} />
               
               <Route 
                 path="/admin/*" 
@@ -86,7 +79,6 @@ const AppContent: React.FC = () => {
 
         <Footer />
         <BottomNav />
-        <Chatbot />
         <ToastContainer />
       </div>
     </Router>
